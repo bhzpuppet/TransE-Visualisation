@@ -1,2 +1,3 @@
 # TransE-Visualisation
-![training process](gif/no loop.gif)
+
+![](https://github.com/bhzpuppet/TransE-Visualisation/blob/main/gif/no%20loop.gif)
