@@ -1,2 +1,2 @@
 # TransE-Visualisation
-![](gif/no loop.gif?raw=true)
+![training process](gif/no loop.gif)
