@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1000px;
+            height: 700px;
+            background-color: white;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"font": {"color": "black"}, "id": "Harry", "label": "Harry", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "Ron", "label": "Ron", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "Hermione", "label": "Hermione", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "Dobby", "label": "Dobby", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "Fred", "label": "Fred", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "George", "label": "George", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "Malfoy", "label": "Malfoy", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "Ginny", "label": "Ginny", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "Dumbledore", "label": "Dumbledore", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "Percy", "label": "Percy", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "Hagrid", "label": "Hagrid", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "Lockhart", "label": "Lockhart", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "Snape", "label": "Snape", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "McGonagall", "label": "McGonagall", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "Wood", "label": "Wood", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "Filch", "label": "Filch", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "Slytherin", "label": "Slytherin", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "Myrtle", "label": "Myrtle", "shape": "dot", "size": 10}, {"font": {"color": "black"}, "id": "Riddle", "label": "Riddle", "shape": "dot", "size": 10}]);
+        edges = new vis.DataSet([{"from": "Harry", "to": "Ron", "value": 276, "weight": 1}, {"from": "Harry", "to": "Hermione", "value": 58, "weight": 1}, {"from": "Harry", "to": "Dobby", "value": 63, "weight": 1}, {"from": "Harry", "to": "Fred", "value": 24, "weight": 1}, {"from": "Harry", "to": "George", "value": 21, "weight": 1}, {"from": "Harry", "to": "Malfoy", "value": 53, "weight": 1}, {"from": "Harry", "to": "Ginny", "value": 21, "weight": 1}, {"from": "Harry", "to": "Dumbledore", "value": 39, "weight": 1}, {"from": "Harry", "to": "Percy", "value": 9, "weight": 1}, {"from": "Harry", "to": "Hagrid", "value": 42, "weight": 1}, {"from": "Harry", "to": "Lockhart", "value": 52, "weight": 1}, {"from": "Harry", "to": "Snape", "value": 17, "weight": 1}, {"from": "Harry", "to": "McGonagall", "value": 20, "weight": 1}, {"from": "Harry", "to": "Wood", "value": 9, "weight": 1}, {"from": "Harry", "to": "Filch", "value": 16, "weight": 1}, {"from": "Harry", "to": "Slytherin", "value": 9, "weight": 1}, {"from": "Harry", "to": "Myrtle", "value": 7, "weight": 1}, {"from": "Harry", "to": "Riddle", "value": 43, "weight": 1}, {"from": "Ron", "to": "Hermione", "value": 119, "weight": 1}, {"from": "Ron", "to": "Hagrid", "value": 19, "weight": 1}, {"from": "Ron", "to": "Fred", "value": 14, "weight": 1}, {"from": "Ron", "to": "Percy", "value": 11, "weight": 1}, {"from": "Ron", "to": "Ginny", "value": 28, "weight": 1}, {"from": "Ron", "to": "Malfoy", "value": 25, "weight": 1}, {"from": "Ron", "to": "Snape", "value": 6, "weight": 1}, {"from": "Ron", "to": "Dumbledore", "value": 11, "weight": 1}, {"from": "Ron", "to": "McGonagall", "value": 8, "weight": 1}, {"from": "Ron", "to": "Lockhart", "value": 18, "weight": 1}, {"from": "Hermione", "to": "Lockhart", "value": 8, "weight": 1}, {"from": "Hermione", "to": "Hagrid", "value": 6, "weight": 1}, {"from": "Hagrid", "to": "Dumbledore", "value": 13, "weight": 1}, {"from": "Fred", "to": "George", "value": 43, "weight": 1}, {"from": "Fred", "to": "Percy", "value": 7, "weight": 1}, {"from": "Dumbledore", "to": "McGonagall", "value": 8, "weight": 1}, {"from": "Dumbledore", "to": "Lockhart", "value": 6, "weight": 1}, {"from": "Lockhart", "to": "Snape", "value": 9, "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>

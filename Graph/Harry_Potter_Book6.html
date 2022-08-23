@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1000px;
+            height: 700px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"font": {"color": "white"}, "group": 0, "id": "Narcissa", "label": "Narcissa", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "group": 0, "id": "Snape", "label": "Snape", "shape": "dot", "size": 9}, {"font": {"color": "white"}, "group": 1, "id": "Harry", "label": "Harry", "shape": "dot", "size": 25}, {"font": {"color": "white"}, "group": 2, "id": "Dumbledore", "label": "Dumbledore", "shape": "dot", "size": 10}, {"font": {"color": "white"}, "group": 0, "id": "Draco", "label": "Draco", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "group": 2, "id": "Hermione", "label": "Hermione", "shape": "dot", "size": 9}, {"font": {"color": "white"}, "group": 2, "id": "Malfoy", "label": "Malfoy", "shape": "dot", "size": 8}, {"font": {"color": "white"}, "group": 3, "id": "Ron", "label": "Ron", "shape": "dot", "size": 15}, {"font": {"color": "white"}, "group": 2, "id": "Slughorn", "label": "Slughorn", "shape": "dot", "size": 7}, {"font": {"color": "white"}, "group": 0, "id": "Voldemort", "label": "Voldemort", "shape": "dot", "size": 4}, {"font": {"color": "white"}, "group": 1, "id": "Sirius", "label": "Sirius", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "group": 2, "id": "Kreacher", "label": "Kreacher", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "group": 2, "id": "Hagrid", "label": "Hagrid", "shape": "dot", "size": 5}, {"font": {"color": "white"}, "group": 3, "id": "Tonks", "label": "Tonks", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "group": 1, "id": "Ginny", "label": "Ginny", "shape": "dot", "size": 5}, {"font": {"color": "white"}, "group": 3, "id": "George", "label": "George", "shape": "dot", "size": 3}, {"font": {"color": "white"}, "group": 3, "id": "Fred", "label": "Fred", "shape": "dot", "size": 3}, {"font": {"color": "white"}, "group": 2, "id": "Borgin", "label": "Borgin", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "group": 1, "id": "Dean", "label": "Dean", "shape": "dot", "size": 3}, {"font": {"color": "white"}, "group": 1, "id": "Neville", "label": "Neville", "shape": "dot", "size": 3}, {"font": {"color": "white"}, "group": 1, "id": "Luna", "label": "Luna", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "group": 1, "id": "Zabini", "label": "Zabini", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "group": 2, "id": "McLaggen", "label": "McLaggen", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "group": 1, "id": "McGonagall", "label": "McGonagall", "shape": "dot", "size": 3}, {"font": {"color": "white"}, "group": 1, "id": "Ogden", "label": "Ogden", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "group": 1, "id": "Lupin", "label": "Lupin", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "group": 2, "id": "Riddle", "label": "Riddle", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "group": 2, "id": "Scrimgeour", "label": "Scrimgeour", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "group": 0, "id": "Morfin", "label": "Morfin", "shape": "dot", "size": 1}, {"font": {"color": "white"}, "group": 3, "id": "Bill", "label": "Bill", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "group": 3, "id": "Fleur", "label": "Fleur", "shape": "dot", "size": 2}, {"font": {"color": "white"}, "group": 1, "id": "Gaunt", "label": "Gaunt", "shape": "dot", "size": 1}]);
+        edges = new vis.DataSet([{"from": "Narcissa", "to": "Snape", "value": 8, "weight": 1}, {"from": "Snape", "to": "Harry", "value": 77, "weight": 1}, {"from": "Snape", "to": "Dumbledore", "value": 31, "weight": 1}, {"from": "Snape", "to": "Draco", "value": 7, "weight": 1}, {"from": "Snape", "to": "Hermione", "value": 9, "weight": 1}, {"from": "Snape", "to": "Malfoy", "value": 30, "weight": 1}, {"from": "Snape", "to": "Ron", "value": 13, "weight": 1}, {"from": "Snape", "to": "Slughorn", "value": 9, "weight": 1}, {"from": "Snape", "to": "Voldemort", "value": 8, "weight": 1}, {"from": "Harry", "to": "Dumbledore", "value": 330, "weight": 1}, {"from": "Harry", "to": "Sirius", "value": 12, "weight": 1}, {"from": "Harry", "to": "Kreacher", "value": 18, "weight": 1}, {"from": "Harry", "to": "Hagrid", "value": 53, "weight": 1}, {"from": "Harry", "to": "Voldemort", "value": 43, "weight": 1}, {"from": "Harry", "to": "Slughorn", "value": 122, "weight": 1}, {"from": "Harry", "to": "Ron", "value": 296, "weight": 1}, {"from": "Harry", "to": "Tonks", "value": 11, "weight": 1}, {"from": "Harry", "to": "Hermione", "value": 168, "weight": 1}, {"from": "Harry", "to": "Ginny", "value": 48, "weight": 1}, {"from": "Harry", "to": "George", "value": 6, "weight": 1}, {"from": "Harry", "to": "Malfoy", "value": 95, "weight": 1}, {"from": "Harry", "to": "Fred", "value": 7, "weight": 1}, {"from": "Harry", "to": "Borgin", "value": 8, "weight": 1}, {"from": "Harry", "to": "Dean", "value": 19, "weight": 1}, {"from": "Harry", "to": "Neville", "value": 22, "weight": 1}, {"from": "Harry", "to": "Luna", "value": 11, "weight": 1}, {"from": "Harry", "to": "Zabini", "value": 18, "weight": 1}, {"from": "Harry", "to": "McLaggen", "value": 22, "weight": 1}, {"from": "Harry", "to": "McGonagall", "value": 17, "weight": 1}, {"from": "Harry", "to": "Ogden", "value": 12, "weight": 1}, {"from": "Harry", "to": "Lupin", "value": 12, "weight": 1}, {"from": "Harry", "to": "Riddle", "value": 7, "weight": 1}, {"from": "Harry", "to": "Scrimgeour", "value": 23, "weight": 1}, {"from": "Dumbledore", "to": "Scrimgeour", "value": 7, "weight": 1}, {"from": "Dumbledore", "to": "Hagrid", "value": 9, "weight": 1}, {"from": "Dumbledore", "to": "Slughorn", "value": 19, "weight": 1}, {"from": "Dumbledore", "to": "Voldemort", "value": 27, "weight": 1}, {"from": "Dumbledore", "to": "Hermione", "value": 14, "weight": 1}, {"from": "Dumbledore", "to": "Ron", "value": 15, "weight": 1}, {"from": "Dumbledore", "to": "Malfoy", "value": 18, "weight": 1}, {"from": "Dumbledore", "to": "Riddle", "value": 15, "weight": 1}, {"from": "Kreacher", "to": "Malfoy", "value": 6, "weight": 1}, {"from": "Hagrid", "to": "Hermione", "value": 16, "weight": 1}, {"from": "Hagrid", "to": "Ron", "value": 9, "weight": 1}, {"from": "Hagrid", "to": "Slughorn", "value": 16, "weight": 1}, {"from": "Voldemort", "to": "Morfin", "value": 8, "weight": 1}, {"from": "Slughorn", "to": "Malfoy", "value": 10, "weight": 1}, {"from": "Slughorn", "to": "Hermione", "value": 19, "weight": 1}, {"from": "Slughorn", "to": "Ron", "value": 18, "weight": 1}, {"from": "Ron", "to": "Tonks", "value": 6, "weight": 1}, {"from": "Ron", "to": "George", "value": 9, "weight": 1}, {"from": "Ron", "to": "Hermione", "value": 222, "weight": 1}, {"from": "Ron", "to": "Ginny", "value": 46, "weight": 1}, {"from": "Ron", "to": "Fred", "value": 13, "weight": 1}, {"from": "Ron", "to": "Bill", "value": 12, "weight": 1}, {"from": "Ron", "to": "Fleur", "value": 13, "weight": 1}, {"from": "Ron", "to": "Malfoy", "value": 13, "weight": 1}, {"from": "Ron", "to": "Dean", "value": 6, "weight": 1}, {"from": "Ron", "to": "McGonagall", "value": 7, "weight": 1}, {"from": "Fred", "to": "George", "value": 36, "weight": 1}, {"from": "Hermione", "to": "Ginny", "value": 32, "weight": 1}, {"from": "Hermione", "to": "Malfoy", "value": 14, "weight": 1}, {"from": "Hermione", "to": "McLaggen", "value": 8, "weight": 1}, {"from": "Ginny", "to": "Dean", "value": 17, "weight": 1}, {"from": "Ginny", "to": "Neville", "value": 7, "weight": 1}, {"from": "Bill", "to": "Fleur", "value": 15, "weight": 1}, {"from": "Malfoy", "to": "Borgin", "value": 10, "weight": 1}, {"from": "Neville", "to": "McGonagall", "value": 6, "weight": 1}, {"from": "Ogden", "to": "Gaunt", "value": 17, "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
